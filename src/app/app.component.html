@@ -1,0 +1,59 @@
+<div *ngIf="!isloggedin">
+<div class="container">
+<div class="row justify-content-center">
+    <div class="col-md-6">
+    <div class="card mt-5">
+        <div class="card-header text-center">
+        <h3>Log IN </h3>
+        </div>
+        <div class="card-body">
+        <form name="form" #f="ngForm" (ngSubmit)="f.form.valid" novalidate>
+
+            <!-- for User ID -->
+            <div class="form-group">
+            <label for="userId">User ID</label>
+            <input type="text" id="userId" name="userId" [(ngModel)]="formdata.userId" 
+                    class="form-control" #uid="ngModel" 
+                    [ngClass]="{'is-invalid': f.submitted && uid.invalid}" required>
+            <div class="invalid-feedback">
+                <div>User ID is required</div>
+            </div>
+            </div>
+
+            <!-- for Password -->
+            <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" 
+                    [(ngModel)]="formdata.password" class="form-control" 
+                    #p="ngModel" [ngClass]="{'is-invalid': f.submitted && p.invalid}" 
+                    required minlength="4">
+            <div class="invalid-feedback">
+                <div *ngIf="p.errors?.['required']">Password is required</div>
+                <div *ngIf="p.errors?.['minlength']">Password must be at least 4 characters</div>
+            </div>
+            </div>
+
+            <!-- for Confirm Password -->
+            <div class="form-group">
+            <label for="confirmPassword">Confirm Password</label>
+            <input type="password" id="confirmPassword" name="confirmPassword" 
+                    [(ngModel)]="formdata.confirmPassword" 
+                    class="form-control" #cp="ngModel" 
+                    [ngClass]="{'is-invalid': f.submitted && cp.invalid }" required>
+            <div class="invalid-feedback">
+                <div *ngIf="cp.errors?.['required']">Confirm password is required</div>
+                <div *ngIf="f.submitted && formdata.password !== formdata.confirmPassword">Passwords must match</div>
+            </div>
+            </div>
+            <br>
+            <!-- for Buttons -->
+            <div class="form-group text-center">
+            <button type="submit" class="btn btn-primary">Register</button>&nbsp;
+            <button type="button" class="btn btn-secondary" (click)="resetForm()">Reset</button>
+            </div>
+        </form>
+        </div>
+    </div>
+    </div>
+</div>
+</div>
